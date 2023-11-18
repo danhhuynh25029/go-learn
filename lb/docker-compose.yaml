@@ -1,0 +1,37 @@
+# docker-compose.yml
+version: '3.4'
+
+services:
+
+  nginx:
+    build:
+      context : ./nginx/
+    # service will run after completion of server1, server2, server3
+    depends_on:
+      - server1
+      - server2
+      - server3
+    ports:
+      - "80:80"
+    restart: always
+
+  server1:
+    build: 
+       context: ./golangservice
+    environment:
+      SERVERID: 1
+    restart: always
+
+  server2:
+    build: 
+      context: ./golangservice
+    environment:
+      SERVERID: 2
+    restart: always
+
+  server3:
+    build: 
+       context: ./golangservice
+    environment:
+      SERVERID: 3
+    restart: always
